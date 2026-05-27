@@ -69,8 +69,13 @@ qa_wolf_take_home/
 │   ├── cli_report.js        # CLI analytics dashboard
 │   ├── utils.js             # Formatting helpers (bars, sections, etc.)
 │
-├── text-pipeline.js         # OpenAI sentiment + summarization logic
-├── scraper.js               # Playwright scraping + validation
+├── analysis/        # OpenAI sentiment + summarization logic
+│   ├── text-analysis.js        # updates persistence
+│   ├── text-pipeline.js            # openai model for text analysis
+│
+├── testing/        # OpenAI sentiment + summarization logic
+│   ├── textAnalysis.spec.js       # test-analysis test 
+├── index.js               # Playwright scraping + validation
 ├── .env.example             # Environment variable template
 ├── README.md
 ```
@@ -92,13 +97,13 @@ npm install
 Create a `.env` file in the root directory:
 
 ```bash
-OPENAI_API_KEY=your_api_key_here
+API_KEY=your_api_key_here
 ```
 
 (Optional if using DB later)
 
 ```bash
-DATABASE_URL=your_database_url_here
+POSTGRES_URL=your_database_url_here
 ```
 
 ---
@@ -106,7 +111,7 @@ DATABASE_URL=your_database_url_here
 ### 3. Run the project
 
 ```bash
-node scraper.js
+node index.js
 ```
 
 ---
