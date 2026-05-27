@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model articles {
+  id               String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  url              String             @unique(map: "url")
+  title            String
+  summary          String?
+  sentiment        String?
+  confidence       Float?             @db.Real
+  impact           String?
+  age              String
+  article_keywords article_keywords[]
+  article_topics   article_topics[]
+}
+
+model article_keywords {
+  id       String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  keyword  String
+  a_id     String?   @db.Uuid
+  articles articles? @relation(fields: [a_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_aid")
+}
+
+model article_topics {
+  id       String    @id(map: "article_findings_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  topic    String?
+  a_id     String?   @db.Uuid
+  articles articles? @relation(fields: [a_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_aid")
+}
